@@ -1,5 +1,14 @@
 import { login } from "./login"
-import { api } from "../api";
+
+const mockSetIsLoggedIn = jest.fn()
+
+jest.mock('react',()=>({
+    ...jest.requireActual('react'),
+    useContext: ()=>({
+        isloggedIn:true,
+        setIsLoggedIn:mockSetIsLoggedIn
+    })
+}))
 
 describe('login',()=>{
 
@@ -10,11 +19,13 @@ describe('login',()=>{
 
     it('Deve exibir um alert com boas vindas caso o email seja válido', async()=>{
         await login(mockEmail)
+        expect(mockSetIsLoggedIn).toHaveBeenCalledWith(true)
         expect(mockAlert).toHaveBeenCalledWith(`Bem-vindo(a), ${mockEmail}`)
     })
 
     it('Não deve exibir a mensagem de boas vindas sem o email',async ()=>{
         await login('zanini@manifesto.com.br')
+        expect(mockSetIsLoggedIn).toHaveBeenCalledWith(true)
         expect(mockAlert).not.toHaveBeenCalledWith('Bem vindo(a)!')
     })
 

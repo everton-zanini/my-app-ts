@@ -3,6 +3,7 @@ import { Box, Center, Heading } from '@chakra-ui/react'
 import './Header.css'
 
 export const Header = () =>{
+    
     return(
         <Box minW='100vh' backgroundColor='#ffa500'>
             <Center>
